@@ -1,5 +1,7 @@
 namespace BusShuttle;
 
+using Spectre.Console;
+
 public class ConsoleUI
 {
     FileSaver fileSaver;
@@ -11,11 +13,17 @@ public class ConsoleUI
 
     public void Show()
     {
-        string mode = AskForInput("Select mode (driver || manager): ");
+        var mode = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+            .Title("Select mode")
+            .AddChoices(new[]
+            {
+                "driver", "manager"
+            })
+        );
 
         if (mode == "driver")
         {
-
             string command;
 
             do
@@ -26,7 +34,14 @@ public class ConsoleUI
 
                 fileSaver.AppendLine(stopName + ":" + boarded);
 
-                command = AskForInput("end || continue: ");
+                command = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                .Title("Select mode")
+                .AddChoices(new[]
+                {
+                "continue", "end"
+                })
+                );
 
             } while (command != "end");
         }
