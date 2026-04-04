@@ -19,4 +19,17 @@ public class FileSaverTests
         Assert.Equal("Hello, World!" + Environment.NewLine, contentFromFile);
 
     }
+    [Fact]
+    public void Test_FileSaver_AppendData()
+    {
+        Stop sampleStop = new Stop("MyStop");
+        Loop sampleLoop = new Loop("MyLoop");
+        Driver sampleDriver = new Driver("Driver");
+        PassengerData sampleData = new PassengerData(5, sampleStop, sampleLoop, sampleDriver);
+
+        fileSaver.AppendData(sampleData);
+        var contentFromFile = File.ReadAllText(testFileName);
+        Assert.Equal("Driver:MyLoop:MyStop:5" + Environment.NewLine, contentFromFile);
+
+    }
 }
